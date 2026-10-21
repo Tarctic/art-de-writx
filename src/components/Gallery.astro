@@ -19,6 +19,7 @@ const { title, photos, layout = 'auto', padding = '0 0 120px' } = Astro.props;
         <div class="tile reveal"><img src={p.src} alt={p.alt} loading="lazy" /></div>
       ))}
     </div>
+    <slot />
   </div>
 </section>
 
