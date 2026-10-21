@@ -1,0 +1,157 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import IntroSplit from '../components/IntroSplit.astro';
+import OfferRows from '../components/OfferRows.astro';
+import Facts from '../components/Facts.astro';
+import Steps from '../components/Steps.astro';
+import Gallery from '../components/Gallery.astro';
+import Lightbox from '../components/Lightbox.astro';
+import ContactCta from '../components/ContactCta.astro';
+import { testimonials } from '../data/portfolio';
+
+const offers = [
+  { title: 'Weddings & celebrations', image: '/images/live-gold-name-notebook.jpg', alt: 'Gold Arabic name calligraphy written live on a black notebook cover', text: 'Give every guest a favour that’s truly theirs: their name, written beautifully, as they arrive or mingle. Gold and silver on black always feels elegant, or I can match your theme and colours.' },
+  { title: 'Brand activations', image: '/images/live-brand-boxes.jpg', alt: 'Watch, perfume and leather-goods boxes personalised with gold Arabic calligraphy for a brand activation', text: 'Draw people to your stand and give them something worth keeping. I personalise your branded products live, so guests leave with your brand and their own name, side by side.' },
+  { title: 'What I can personalise', image: '/images/live-luggage-tags.jpg', alt: 'Leather luggage tags personalised with Arabic names in gold and black calligraphy', text: 'Notebooks, luggage tags, gift bags, caps, tote bags, phone cases, perfume bottles, packaging and more. If it can hold ink or paint, let’s talk about it.' },
+];
+
+const facts = [
+  { label: 'Where', value: 'Events across the UAE' },
+  { label: 'Duration', value: '[ADD: hours / package options]', placeholder: true },
+  { label: 'Items', value: '[ADD: supplied by you, by me, or either]', placeholder: true },
+  { label: 'Pricing', value: '[ADD: from AED … / on request]', placeholder: true },
+];
+
+const steps = [
+  { title: 'Tell me about your event', text: 'The date, the venue, how many guests, and what you’d like personalised.' },
+  { title: 'We plan the details', text: 'Items, ink colours and how the station will look, so it fits your occasion.' },
+  { title: 'I write live on the day', text: 'Your guests watch their names come to life, then take them home.' },
+];
+
+const gallery = [
+  { src: '/images/live-notebook-rows.jpg', alt: 'Rows of black notebooks, each personalised live with a guest’s name in Arabic and English' },
+  { src: '/images/live-luggage-tags.jpg', alt: 'Leather luggage tags personalised with Arabic names in gold and black calligraphy' },
+  { src: '/images/live-watch-box-lid.jpg', alt: 'Watch box lid hand-decorated with gold Arabic calligraphy, with the watch displayed below' },
+  { src: '/images/live-caps-names.jpg', alt: 'White caps personalised with Arabic names and colourful confetti strokes' },
+  { src: '/images/live-guests-photographing.jpg', alt: 'Guests photographing their personalised calligraphy at the live station' },
+  { src: '/images/live-phone-case.jpg', alt: 'Black phone case covered in white Arabic calligraphy, held up by a guest' },
+  { src: '/images/live-brand-boxes.jpg', alt: 'Watch, perfume and leather-goods boxes personalised with gold Arabic calligraphy' },
+  { src: '/images/live-personalisation-table.jpg', alt: 'Live personalisation table with caps, tote bags, notebooks and markers' },
+  { src: '/images/live-notebooks-gold-silver.jpg', alt: 'A row of black notebooks personalised with names in gold and silver ink' },
+  { src: '/images/live-guest-luggage-tag.jpg', alt: 'Guest holding a luggage tag personalised with her name in Arabic calligraphy' },
+  { src: '/images/live-kids-caps.jpg', alt: 'Two children wearing caps personalised with their names in Arabic calligraphy' },
+  { src: '/images/hajara-writing.jpg', alt: 'Hajara writing a guest’s name in gold and silver calligraphy on a black notebook' },
+];
+
+const keepsakes = [
+  { src: '/images/keepsake-phone-case.jpg', alt: 'Black phone case hand-painted with an Arabic name in gold' },
+  { src: '/images/keepsake-incense-burner.jpg', alt: 'Wooden incense burner personalised with a name in gold Arabic calligraphy' },
+  { src: '/images/keepsake-floral-bag.jpg', alt: 'Black and white shopping bag hand-painted with pink and red flowers' },
+  { src: '/images/keepsake-amber-perfume.jpg', alt: 'Amber perfume bottle personalised with a name in white Arabic calligraphy' },
+  { src: '/images/keepsake-red-pouches.jpg', alt: 'Red leather pouches personalised with Arabic names in front of an open perfume case' },
+  { src: '/images/keepsake-perfume-peonies.jpg', alt: 'Glass perfume bottle hand-painted with pink peonies and olive leaves' },
+  { src: '/images/keepsake-gift-bag.jpg', alt: 'Black gift bag decorated with white and gold Arabic calligraphy' },
+  { src: '/images/keepsake-notebooks.jpg', alt: 'Two black notebooks personalised with names in gold Arabic and silver English calligraphy' },
+  { src: '/images/keepsake-black-perfume.jpg', alt: 'Black perfume bottle covered in gold Arabic calligraphy' },
+  { src: '/images/keepsake-tech-boxes.jpg', alt: 'White tech gift boxes personalised with names in white Arabic calligraphy' },
+  { src: '/images/keepsake-tote-blue.jpg', alt: 'Black tote bag painted with layered blue and silver Arabic calligraphy' },
+  { src: '/images/keepsake-cap.jpg', alt: 'White cap personalised with a name in Arabic and English, with hearts and stars' },
+  { src: '/images/keepsake-tote-bags.jpg', alt: 'Tote bags personalised with names in colourful hand lettering' },
+  { src: '/images/keepsake-perfume-set.jpg', alt: 'Set of four perfume bottles hand-painted with delicate flowers' },
+  { src: '/images/keepsake-perfume-sunset.jpg', alt: 'Perfume bottle hand-painted with a pink sunset sky, roses and a white garden fence' },
+  { src: '/images/keepsake-model-car.jpg', alt: 'Red model car decorated with black Arabic calligraphy' },
+  { src: '/images/keepsake-perfume-roses.jpg', alt: 'Perfume bottle hand-painted with pink roses and an Arabic letter' },
+  { src: '/images/keepsake-perfume-box.jpg', alt: 'Perfume box covered in black Arabic calligraphy beside a bottle hand-painted with wildflowers' },
+];
+---
+<Base
+  title="Live Events — Art De Writx"
+  description="Personalised Arabic calligraphy created live for your guests at weddings and brand activations across the UAE."
+  current="live"
+>
+  <PageHero
+    image="/images/live-notebooks-gold-silver.jpg"
+    alt="A row of black notebooks personalised live with guests’ names in Arabic and English, in gold and silver ink"
+    eyebrow="Services · Live Events"
+    title="Live Events"
+    subtitle="Personalised Arabic calligraphy, created live for your guests."
+    primary={{ label: 'Book your event', href: '#contact' }}
+    secondary={{ label: 'See the work', href: '#gallery' }}
+  />
+
+  <IntroSplit
+    image="/images/live-station.jpg"
+    alt="Live calligraphy station with black notebooks, a name sign-up sheet and a ‘Live Arabic Calligraphy Artist’ sign"
+    eyebrow="The experience"
+    title="A keepsake, written"
+    accent="just for them"
+    stat={{ value: '100+', label: 'Live events & happy clients' }}
+  >
+    <p class="muted">I set up a calligraphy station at your event and write each guest’s name by hand, in Arabic and English, while they watch. It’s a little moment of magic and a personal gift in one.</p>
+    <p class="muted">From weddings to brand activations, I tailor the colours, the items and the set-up so everything feels part of your occasion.</p>
+  </IntroSplit>
+
+  <section class="offers">
+    <div class="wrap"><OfferRows offers={offers} /></div>
+  </section>
+
+  <Facts title="Booking details" facts={facts} />
+
+  <Steps title="From first message to final name" steps={steps} />
+
+  <Gallery title="Moments from live events" photos={gallery} layout="four" />
+
+  <section id="keepsakes" class="section section--sand keepsakes">
+    <div class="wrap">
+      <div class="reveal keepsakes-head">
+        <p class="eyebrow">✦ Up close</p>
+        <h2 class="title title--md">Keepsakes</h2>
+        <p class="muted">A closer look at pieces I’ve personalised for guests and brands: bottles, bags, boxes and more, each one written or painted by hand.</p>
+      </div>
+      <div class="kgrid">
+        {keepsakes.map((k) => (
+          <button class="tile tile--sm" type="button" data-lightbox="keepsakes" aria-label={`Open image: ${k.alt}`}>
+            <img src={k.src} alt={k.alt} loading="lazy" />
+          </button>
+        ))}
+      </div>
+    </div>
+    <Lightbox group="keepsakes" label="Keepsake image viewer" />
+  </section>
+
+  <section class="section section--blush kind-words">
+    <div class="wrap">
+      <h2 class="reveal script-title kind-title">Kind Words</h2>
+      <div class="cards2">
+        {testimonials.slice(0, 2).map((t) => (
+          <figure class="reveal kind-card">
+            <blockquote>“{t.quote}”</blockquote>
+            <figcaption>{t.author}</figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ContactCta
+    title="Let’s plan your event"
+    text="Tell me your date, venue and roughly how many guests, and I’ll come back to you with ideas and availability."
+    mailSubject="Live event enquiry"
+    whatsappText="Hi Hajara, I'd like to ask about live calligraphy for my event."
+  />
+</Base>
+
+<style>
+  .offers { padding: 0 0 40px; }
+  .keepsakes { padding: 110px 0 120px; }
+  .keepsakes-head { text-align: center; margin: 0 auto 44px; max-width: 680px; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+  .kgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  @media (min-width: 640px) { .kgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; } }
+  @media (min-width: 1100px) { .kgrid { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+  .kind-words { padding: 110px 0; }
+  .kind-title { margin: 0 0 44px; text-align: center; font-size: clamp(54px, 6vw, 76px); }
+  .kind-card { margin: 0; background: var(--ivory); border-radius: 20px; padding: 40px 36px; text-align: center; }
+  .kind-card blockquote { margin: 0; font-family: var(--serif); font-style: italic; font-size: 26px; line-height: 1.45; }
+  .kind-card figcaption { margin-top: 20px; font-size: 12px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+</style>

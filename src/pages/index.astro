@@ -1,0 +1,345 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Lightbox from '../components/Lightbox.astro';
+import { site } from '../data/site';
+import { categories, portfolio, testimonials } from '../data/portfolio';
+
+const serviceCards = [
+  { title: 'Live Events', text: 'Personalised Arabic calligraphy created live for your guests.', cta: 'View live events →', href: '/live-events/', image: '/images/live-gift-bag.jpg', alt: 'Black gift bag hand-decorated with white and gold Arabic calligraphy at a live brand event' },
+  { title: 'Custom Calligraphy', text: 'Handwritten names, verses, quotes and bespoke artworks created especially for you.', cta: 'Explore custom art →', href: '/custom-art/', image: '/images/custom-pink-canvas.jpg', alt: 'Hand-painted canvas with pink Arabic calligraphy strokes on a red and cream background' },
+  { title: 'Workshops', text: 'Learn Arabic calligraphy through a creative, hands-on experience.', cta: 'View workshops →', href: '/workshops/', image: '/images/workshop-table-easels.jpg', alt: 'Workshop table set with blank canvases on easels, paints, markers and calligraphy practice sheets' },
+];
+
+const stats = [
+  { value: '10+', label: 'Years of experience' },
+  { value: '80+', label: 'Students trained worldwide' },
+  { value: '100+', label: 'Live events & happy clients' },
+];
+
+const firstCat = categories[0];
+---
+<Base
+  title="Art De Writx — Live Arabic Calligraphy Artist"
+  description="Live Arabic calligraphy for weddings, brand activations and exclusive events across the UAE, plus custom artwork and workshops by Hajara."
+  current="home"
+>
+  <!-- HERO -->
+  <section id="home" class="hero">
+    <img src="/images/hero-calligraphy.jpg" alt="White Arabic calligraphy strokes flowing across a black canvas" />
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <div class="hero-anim hero-copy">
+        <p class="eyebrow eyebrow--hero">✦ Art De Writx ✦</p>
+        <h1>Live Arabic Calligraphy Artist</h1>
+        <p class="hero-sub">{site.strapline}</p>
+        <div class="btn-row hero-btns">
+          <a class="btn btn-gold" href="#contact">Book your event</a>
+          <a class="btn btn-ghost-light" href="#portfolio">Explore my work</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about" class="section">
+    <div class="wrap split">
+      <div class="reveal lift about-media">
+        <div class="arch"><img src="/images/hajara-writing.jpg" alt="Hajara, in black gloves, writing a guest’s name in gold and silver calligraphy on a black notebook" style="object-position: center 60%" /></div>
+      </div>
+      <div class="reveal stack about-copy">
+        <p class="eyebrow">✦ About me</p>
+        <h2 class="title title--xl">I’m Hajara, <span class="script-accent about-accent">the hand behind the ink</span></h2>
+        <p class="muted">I started painting as a young girl, simply because I loved creating. Over the years, that passion grew into Art De Writx, a business where I get to bring together art, Arabic calligraphy and meaningful experiences.</p>
+        <p class="muted">I’m self-taught, and I love exploring new styles and turning my clients’ ideas into pieces that feel truly theirs. Today, I create custom artwork, teach calligraphy and bring live personalisation experiences to events across the UAE.</p>
+        <blockquote class="lede about-quote">“I believe that every name carries a story, and every story deserves to be written beautifully.”</blockquote>
+        <div class="stats">
+          {stats.map((s) => (
+            <div class="stat">
+              <div class="stat-value">{s.value}</div>
+              <div class="stat-label">{s.label}</div>
+            </div>
+          ))}
+        </div>
+        <div class="about-actions">
+          <a class="btn btn-ink" href="#services">More about me</a>
+          <a class="textlink" href="#contact">Let’s talk</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" class="section section--sand">
+    <div class="wrap">
+      <div class="reveal services-head">
+        <p class="eyebrow">✦ Services</p>
+        <h2 class="title services-title">Personalised calligraphy, created beautifully and live for your guests.</h2>
+      </div>
+      <div class="cards">
+        {serviceCards.map((c) => (
+          <a class="svc lift reveal" href={c.href}>
+            <div class="svc-media">
+              <img src={c.image} alt={c.alt} loading="lazy" />
+              <div class="svc-overlay"><span>{c.cta}</span></div>
+            </div>
+            <h3 class="title svc-title">{c.title}</h3>
+            <p class="muted svc-text">{c.text}</p>
+            <span class="svc-cta-mobile textlink">{c.cta}</span>
+          </a>
+        ))}
+      </div>
+      <div class="reveal closing">
+        <p class="lede">Not sure which is right for your event? Tell me about it.</p>
+        <a class="btn btn-ink" href="#contact">Book your event</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO -->
+  <section id="portfolio" class="section">
+    <div class="wrap">
+      <div class="reveal portfolio-head">
+        <p class="eyebrow">✦ Selected work</p>
+        <h2 class="title title--xl">My Portfolio</h2>
+      </div>
+      <div role="group" aria-label="Filter portfolio" class="tabs">
+        {categories.map((c, i) => (
+          <button type="button" class="tab" aria-pressed={i === 0 ? 'true' : 'false'} data-filter={c.key} data-more-label={c.more.label} data-more-href={c.more.href}>{c.tab}</button>
+        ))}
+      </div>
+      <div class="pgrid">
+        {portfolio.map((p) => {
+          const cat = categories.find((c) => c.key === p.cat)!;
+          return (
+            <button class="tile" type="button" data-lightbox="portfolio" data-cat={p.cat} data-label={cat.label} aria-label={`Open image: ${p.alt}`} hidden={p.cat !== firstCat.key}>
+              <img src={p.src} alt={p.alt} loading="lazy" />
+            </button>
+          );
+        })}
+      </div>
+      <div class="reveal closing portfolio-closing">
+        <p class="lede">Love what you see? Let’s create something just for you.</p>
+        <div class="portfolio-actions">
+          <a class="btn btn-ink" href="#contact">Book your event</a>
+          <a class="btn btn-ghost" href={firstCat.more.href} data-more>{firstCat.more.label}</a>
+          <a class="textlink insta" href={site.instagram} target="_blank" rel="noopener" aria-label="More on Instagram (opens in a new tab)">More on Instagram<Icon name="external" size={13} /></a>
+        </div>
+      </div>
+    </div>
+    <Lightbox group="portfolio" label="Portfolio image viewer" />
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section id="testimonials" class="section section--blush testimonials">
+    <div class="wrap testimonials-wrap">
+      <div class="reveal testimonials-head">
+        <h2 class="script-title">Kind Words</h2>
+        <div class="ornament" aria-hidden="true"><span></span><span class="ornament-star">✦</span><span></span></div>
+      </div>
+      <div class="t-track reveal" aria-roledescription="carousel" aria-label="Client testimonials" tabindex="0" data-track>
+        {testimonials.map((t) => (
+          <figure class="t-slide">
+            <blockquote>“{t.quote}”</blockquote>
+            <figcaption>{t.author}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="t-controls">
+        <button class="roundbtn" type="button" aria-label="Previous testimonial" data-slide-prev><Icon name="prev" /></button>
+        <div class="dots">
+          {testimonials.map((_, i) => (
+            <button type="button" class="dot" aria-label={`Show testimonial ${i + 1}`} aria-current={i === 0 ? 'true' : 'false'} data-slide={i}><span></span></button>
+          ))}
+        </div>
+        <button class="roundbtn" type="button" aria-label="Next testimonial" data-slide-next><Icon name="next" /></button>
+      </div>
+      <div class="t-book">
+        <a class="btn btn-ink" href="#contact">Book your event</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="section">
+    <div class="wrap split contact-split">
+      <div class="reveal stack contact-copy">
+        <h2 class="script-title">Let’s create together</h2>
+        <p class="muted">Planning a wedding, a brand activation or a private celebration? Tell me a little about it: the date, the venue and roughly how many guests. I’ll get back to you with ideas and availability.</p>
+        <div role="status" class="sent" hidden data-sent>Thank you! Your email app should open with your message ready to send. If it doesn’t, write to me at <a href={`mailto:${site.email}`}>{site.email}</a> or message me on WhatsApp.</div>
+        <form class="formgrid" data-contact-form data-email={site.email}>
+          <div>
+            <label class="flabel" for="cf-name">Name</label>
+            <input class="field" id="cf-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div>
+            <label class="flabel" for="cf-email">Email</label>
+            <input class="field" id="cf-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="full">
+            <label class="flabel" for="cf-subject">Subject</label>
+            <input class="field" id="cf-subject" name="subject" type="text" required />
+          </div>
+          <div class="full">
+            <label class="flabel" for="cf-message">Message</label>
+            <textarea class="field" id="cf-message" name="message" rows="5" required></textarea>
+          </div>
+          <div class="full btn-row form-actions">
+            <button class="btn btn-ink" type="submit">Submit</button>
+            <a class="btn btn-ghost" href={site.whatsapp} target="_blank" rel="noopener"><Icon name="whatsapp" size={18} />Message on WhatsApp</a>
+          </div>
+          <p class="full muted form-note">Or email me directly at <a href={`mailto:${site.email}`}>{site.email}</a></p>
+        </form>
+      </div>
+      <div class="reveal lift contact-media">
+        <div class="arch"><img src="/images/live-station.jpg" alt="Live calligraphy station with black notebooks, a name sign-up sheet and a ‘Live Arabic Calligraphy Artist’ sign" loading="lazy" /></div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero { position: relative; min-height: 720px; display: flex; align-items: center; overflow: hidden; background: var(--night); }
+  .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: left center; display: block; }
+  .hero-shade { position: absolute; inset: 0; background: rgba(18, 15, 13, .62); }
+  .hero-inner { position: relative; display: flex; justify-content: center; text-align: center; padding-top: 120px; padding-bottom: 120px; }
+  .hero-copy { max-width: 600px; display: flex; flex-direction: column; gap: 24px; }
+  .hero h1 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(46px, 6.4vw, 84px); line-height: 1.02; letter-spacing: -.01em; color: var(--ivory); }
+  .hero-sub { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.4; color: var(--mist); }
+  .hero-btns { justify-content: center; margin-top: 12px; }
+  @media (min-width: 900px) {
+    .hero-shade { background: linear-gradient(90deg, rgba(18, 15, 13, .12) 0%, rgba(18, 15, 13, .45) 45%, rgba(18, 15, 13, .72) 100%); }
+    .hero-inner { justify-content: flex-end; text-align: left; }
+    .hero-btns { justify-content: flex-start; }
+  }
+
+  /* About */
+  .about-media { max-width: 500px; width: 100%; margin: 0 auto; }
+  .about-copy { gap: 22px; }
+  .about-accent { font-size: 1.15em; }
+  .about-quote { margin: 8px 0 0; padding: 0; }
+  .stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 10px; padding: 22px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+  .stat { text-align: center; }
+  .stat:nth-child(2) { border-left: 1px solid var(--rule); border-right: 1px solid var(--rule); }
+  .stat-value { font-family: var(--serif); font-size: 40px; font-weight: 500; line-height: 1; }
+  .stat-label { margin-top: 8px; font-size: 11px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; line-height: 1.5; color: var(--muted); }
+  .about-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 24px; margin-top: 8px; }
+
+  /* Services */
+  .services-head { max-width: 760px; margin: 0 auto 64px; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 18px; }
+  .services-title { font-size: clamp(34px, 4vw, 52px); line-height: 1.12; }
+  .cards { display: grid; grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  @media (min-width: 900px) { .cards { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; } }
+  .svc { text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+  .svc:hover { color: inherit; }
+  .svc-media { position: relative; overflow: hidden; border-radius: 240px 240px 18px 18px; aspect-ratio: 4 / 5; background: var(--blush); }
+  .svc-media img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .svc-overlay { position: absolute; inset: 0; display: flex; align-items: flex-end; justify-content: center; padding: 28px; background: rgba(30, 26, 23, .52); opacity: 0; transition: opacity .35s ease; }
+  .svc:hover .svc-overlay, .svc:focus-visible .svc-overlay { opacity: 1; }
+  .svc-overlay span { font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--ivory); border-bottom: 1px solid var(--gold); padding-bottom: 6px; }
+  .svc-title { margin: 26px 0 8px; font-size: 32px; line-height: 1.1; text-align: center; }
+  .svc-text { margin: 0 auto !important; max-width: 320px; text-align: center; }
+  .svc-cta-mobile { display: inline-block; margin: 16px auto 0; }
+  @media (hover: hover) and (min-width: 900px) { .svc-cta-mobile { display: none; } }
+  .closing { margin-top: 72px; display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; }
+
+  /* Portfolio */
+  .portfolio-head { display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center; margin-bottom: 40px; }
+  .tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 40px; }
+  .tab { min-height: 44px; padding: 0 22px; border-radius: 999px; cursor: pointer; font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; transition: background-color .25s ease, color .25s ease; background: transparent; color: var(--ink); border: 1px solid var(--field-border); }
+  .tab[aria-pressed='true'] { background: var(--ink); color: var(--ivory); border-color: var(--ink); }
+  .pgrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  @media (min-width: 768px) { .pgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
+  .pgrid .tile[hidden] { display: none; }
+  .portfolio-closing { margin-top: 64px; gap: 20px; }
+  .portfolio-actions { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 24px; }
+  .insta { display: inline-flex; align-items: center; gap: 6px; }
+
+  /* Testimonials */
+  .testimonials { padding: 110px 0; }
+  .testimonials-wrap { max-width: 920px; }
+  .testimonials-head { text-align: center; margin-bottom: 28px; }
+  .testimonials-head .ornament { margin-top: 14px; }
+  .t-track { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+  .t-track::-webkit-scrollbar { display: none; }
+  .t-slide { flex: 0 0 100%; scroll-snap-align: center; padding: 8px 4px; margin: 0; text-align: center; }
+  .t-slide blockquote { margin: 0 auto; max-width: 720px; font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(24px, 2.8vw, 34px); line-height: 1.4; color: var(--ink); }
+  .t-slide figcaption { margin-top: 24px; font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+  .t-controls { margin-top: 36px; display: flex; align-items: center; justify-content: center; gap: 20px; }
+  .dots { display: flex; align-items: center; gap: 4px; }
+  .dot { width: 28px; height: 44px; padding: 0; border: 0; background: transparent; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+  .dot span { display: block; height: 8px; width: 8px; border-radius: 999px; background: #9C8B7C; transition: width .3s ease, background-color .3s ease; }
+  .dot[aria-current='true'] span { width: 22px; background: var(--ink); }
+  .t-book { margin-top: 44px; text-align: center; }
+
+  /* Contact */
+  .contact-split { align-items: start; }
+  .contact-copy { gap: 18px; }
+  .sent { padding: 18px 20px; border-radius: 12px; background: var(--sand); border: 1px solid var(--rule); color: var(--ink); }
+  .formgrid { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; margin-top: 8px; }
+  @media (min-width: 640px) {
+    .formgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .formgrid .full { grid-column: 1 / -1; }
+  }
+  .flabel { display: block; margin-bottom: 8px; font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; color: var(--ink); }
+  .field { width: 100%; min-height: 50px; padding: 14px 16px; font-family: var(--sans); font-size: 16px; color: var(--ink); background: #FFFFFF; border: 1px solid var(--field-border); border-radius: 10px; outline: none; transition: border-color .2s ease, box-shadow .2s ease; }
+  .field:focus { border-color: var(--bronze); box-shadow: 0 0 0 3px rgba(115, 85, 47, .15); }
+  textarea.field { resize: vertical; min-height: 150px; }
+  .form-actions { margin-top: 4px; }
+  .form-note { margin: 4px 0 0 !important; font-size: 15px; }
+  .contact-media { max-width: 480px; width: 100%; margin: 0 auto; }
+</style>
+
+<script>
+  // Portfolio filter tabs
+  const tabs = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const tiles = document.querySelectorAll<HTMLElement>('[data-lightbox="portfolio"]');
+  const more = document.querySelector<HTMLAnchorElement>('[data-more]');
+  tabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.setAttribute('aria-pressed', String(t === tab)));
+      tiles.forEach((tile) => { tile.hidden = tile.dataset.cat !== tab.dataset.filter; });
+      if (more) {
+        more.textContent = tab.dataset.moreLabel ?? '';
+        more.href = tab.dataset.moreHref ?? '#';
+      }
+    });
+  });
+
+  // Testimonial carousel
+  const track = document.querySelector<HTMLElement>('[data-track]');
+  const dots = document.querySelectorAll<HTMLButtonElement>('[data-slide]');
+  let slide = 0;
+  const setDot = (i: number) => {
+    slide = i;
+    dots.forEach((d, j) => d.setAttribute('aria-current', String(j === i)));
+  };
+  const goSlide = (i: number) => {
+    if (!track) return;
+    const n = (i + dots.length) % dots.length;
+    track.scrollTo({ left: n * track.clientWidth, behavior: 'smooth' });
+    setDot(n);
+  };
+  track?.addEventListener('scroll', () => {
+    if (!track.clientWidth) return;
+    const i = Math.round(track.scrollLeft / track.clientWidth);
+    if (i !== slide && i >= 0 && i < dots.length) setDot(i);
+  });
+  dots.forEach((d) => d.addEventListener('click', () => goSlide(Number(d.dataset.slide))));
+  document.querySelector('[data-slide-prev]')?.addEventListener('click', () => goSlide(slide - 1));
+  document.querySelector('[data-slide-next]')?.addEventListener('click', () => goSlide(slide + 1));
+
+  // Contact form: opens the visitor's email app with the message filled in
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const f = new FormData(form);
+    const get = (k: string) => String(f.get(k) ?? '');
+    const body = `Hi Hajara,\n\n${get('message')}\n\n${get('name')}\n${get('email')}`;
+    const subject = get('subject') || 'Enquiry';
+    window.location.href = `mailto:${form.dataset.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    const sent = document.querySelector<HTMLElement>('[data-sent]');
+    if (sent) sent.hidden = false;
+  });
+</script>

@@ -1,0 +1,44 @@
+---
+// Full-bleed photo hero used at the top of each service page.
+interface Link { label: string; href: string }
+interface Props {
+  image: string;
+  alt: string;
+  eyebrow: string;
+  title: string;
+  subtitle: string;
+  primary: Link;
+  secondary: Link;
+  /** CSS object-position for the background photo. */
+  position?: string;
+  /** Darkness of the overlay, 0–1. */
+  shade?: number;
+}
+const { image, alt, eyebrow, title, subtitle, primary, secondary, position = 'center', shade = 0.62 } = Astro.props;
+---
+<section id="top" class="page-hero">
+  <img src={image} alt={alt} style={`object-position: ${position}`} />
+  <div class="page-hero-shade" aria-hidden="true" style={`background: rgba(18, 15, 13, ${shade})`}></div>
+  <div class="wrap page-hero-inner">
+    <div class="hero-anim page-hero-copy">
+      <p class="eyebrow eyebrow--hero">✦ {eyebrow} ✦</p>
+      <h1>{title}</h1>
+      <p class="page-hero-sub">{subtitle}</p>
+      <div class="btn-row page-hero-btns">
+        <a class="btn btn-gold" href={primary.href}>{primary.label}</a>
+        <a class="btn btn-ghost-light" href={secondary.href}>{secondary.label}</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .page-hero { position: relative; min-height: 600px; display: flex; align-items: center; overflow: hidden; background: var(--night); }
+  .page-hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+  .page-hero-shade { position: absolute; inset: 0; }
+  .page-hero-inner { position: relative; display: flex; justify-content: center; text-align: center; padding-top: 110px; padding-bottom: 110px; }
+  .page-hero-copy { max-width: 780px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+  h1 { margin: 0; font-family: var(--serif); font-weight: 500; font-size: clamp(48px, 6.4vw, 84px); line-height: 1.02; color: var(--ivory); }
+  .page-hero-sub { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(20px, 2.2vw, 26px); line-height: 1.4; color: var(--mist); }
+  .page-hero-btns { justify-content: center; margin-top: 10px; }
+</style>

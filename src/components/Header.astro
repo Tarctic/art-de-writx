@@ -1,0 +1,120 @@
+---
+import Icon from './Icon.astro';
+import { services, type PageKey } from '../data/site';
+
+interface Props {
+  current: PageKey;
+}
+const { current } = Astro.props;
+const onHome = current === 'home';
+// On the home page the nav scrolls to sections; elsewhere it links back to them.
+const home = (hash: string) => (onHome ? `#${hash}` : `/#${hash}`);
+const homeHref = onHome ? '#home' : '/';
+---
+<header class="site-header">
+  <div class="wrap header-bar">
+    <a href={homeHref} aria-label={onHome ? 'Art De Writx — back to top' : 'Art De Writx — home'} class="logo-link">
+      <img src="/images/logo.png" alt="Art De Writx logo" width="174" height="58" />
+    </a>
+
+    <nav aria-label="Main" class="nav-links">
+      <a class="navlink" href={homeHref}>Home</a>
+      <a class="navlink" href={home('about')}>About</a>
+      <div class="dd" data-dd>
+        <a class:list={['navlink', { active: !onHome }]} href={home('services')}>Services</a>
+        <button class="dd-caret" type="button" aria-label="Show services" aria-expanded="false" aria-controls="dd-services" data-dd-toggle>
+          <Icon name="caret" size={14} />
+        </button>
+        <div id="dd-services" class="dd-menu">
+          {services.map((s) => (
+            <a class:list={['dd-item', { active: s.key === current }]} href={s.href} aria-current={s.key === current ? 'page' : undefined}>{s.label}</a>
+          ))}
+        </div>
+      </div>
+      <a class="navlink" href={home('portfolio')}>Portfolio</a>
+      <a class="navlink" href="#contact">Contact</a>
+    </nav>
+
+    <button class="burger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+      <span class="burger-open"><Icon name="menu" /></span>
+      <span class="burger-close"><Icon name="close" /></span>
+    </button>
+  </div>
+
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Mobile" hidden>
+    <div class="wrap mobile-menu-inner">
+      <a class="navlink" href={homeHref} data-menu-close>Home</a>
+      <a class="navlink" href={home('about')} data-menu-close>About</a>
+      <a class:list={['navlink', 'mobile-services', { active: !onHome }]} href={home('services')} data-menu-close>Services</a>
+      <div class="mobile-sub">
+        {services.map((s) => (
+          <a class:list={['dd-item', { active: s.key === current }]} href={s.href} aria-current={s.key === current ? 'page' : undefined} data-menu-close>{s.label}</a>
+        ))}
+      </div>
+      <a class="navlink" href={home('portfolio')} data-menu-close>Portfolio</a>
+      <a class="navlink last" href="#contact" data-menu-close>Contact</a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header { position: sticky; top: 0; z-index: 50; background: rgba(248, 244, 239, .94); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+  .header-bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 80px; }
+  .logo-link { display: flex; align-items: center; text-decoration: none; }
+  .logo-link img { height: 58px; width: auto; display: block; }
+
+  .nav-links { display: none; align-items: center; gap: 36px; }
+  .burger { display: inline-flex; align-items: center; justify-content: center; width: 48px; height: 48px; border: 1px solid var(--ink); border-radius: 999px; background: transparent; color: var(--ink); cursor: pointer; }
+  .burger span { display: inline-flex; }
+  .burger .burger-close,
+  .burger[aria-expanded='true'] .burger-open { display: none; }
+  .burger[aria-expanded='true'] .burger-close { display: inline-flex; }
+  @media (min-width: 900px) {
+    .nav-links { display: flex; }
+    .burger, .mobile-menu { display: none !important; }
+  }
+
+  .navlink { font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; text-decoration: none; color: var(--ink); padding: 12px 0; border-bottom: 1px solid transparent; transition: border-color .25s ease, color .25s ease; }
+  .navlink:hover { color: var(--bronze); border-bottom-color: var(--bronze); }
+  .nav-links .navlink.active { color: var(--bronze); border-bottom-color: var(--bronze); }
+
+  .dd { position: relative; display: flex; align-items: center; gap: 2px; }
+  .dd-caret { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 44px; padding: 0; border: 0; background: transparent; color: var(--ink); cursor: pointer; }
+  .dd-caret :global(svg) { transition: transform .25s ease; }
+  .dd-menu { position: absolute; top: 100%; left: -24px; min-width: 220px; padding: 10px 0; background: var(--ivory); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 18px 40px rgba(30, 26, 23, .12); display: flex; flex-direction: column; opacity: 0; visibility: hidden; transform: translateY(8px); transition: opacity .2s ease, transform .2s ease, visibility .2s; }
+  .dd:hover .dd-menu, .dd:focus-within .dd-menu, .dd.open .dd-menu { opacity: 1; visibility: visible; transform: none; }
+  .dd:hover .dd-caret :global(svg), .dd:focus-within .dd-caret :global(svg), .dd.open .dd-caret :global(svg) { transform: rotate(180deg); }
+  .dd-item { font-family: var(--sans); font-size: 12px; font-weight: 500; letter-spacing: .18em; text-transform: uppercase; text-decoration: none; color: var(--ink); padding: 12px 24px; }
+  .dd-item:hover { background: var(--sand); color: var(--bronze); }
+  .dd-item.active { color: var(--bronze); }
+
+  .mobile-menu { border-top: 1px solid var(--line); background: var(--ivory); }
+  .mobile-menu-inner { display: flex; flex-direction: column; padding-top: 12px; padding-bottom: 24px; }
+  .mobile-menu .navlink { padding: 14px 0; border-bottom: 1px solid var(--line); }
+  .mobile-menu .navlink.last { border-bottom: 0; }
+  .mobile-menu .mobile-services { padding: 14px 0 8px; border-bottom: 0; }
+  .mobile-menu .mobile-services.active { color: var(--bronze); }
+  .mobile-sub { display: flex; flex-direction: column; padding: 0 0 10px 18px; border-bottom: 1px solid var(--line); }
+  .mobile-sub .dd-item { padding: 10px 0; }
+</style>
+
+<script>
+  const burger = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+  const menu = document.getElementById('mobile-menu');
+  const setMenu = (open: boolean) => {
+    if (!burger || !menu) return;
+    menu.hidden = !open;
+    burger.setAttribute('aria-expanded', String(open));
+    burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  };
+  burger?.addEventListener('click', () => setMenu(menu?.hidden ?? false));
+  document.querySelectorAll('[data-menu-close]').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+
+  const dd = document.querySelector<HTMLElement>('[data-dd]');
+  const ddToggle = document.querySelector<HTMLButtonElement>('[data-dd-toggle]');
+  ddToggle?.addEventListener('click', () => {
+    const open = !dd?.classList.contains('open');
+    dd?.classList.toggle('open', open);
+    ddToggle.setAttribute('aria-expanded', String(open));
+  });
+</script>

@@ -1,0 +1,29 @@
+---
+import SectionHead from './SectionHead.astro';
+
+export interface Photo { src: string; alt: string }
+interface Props {
+  title: string;
+  photos: Photo[];
+  /** "four" = 2 columns on phones, 4 on desktop; "auto" = as many 300px+ columns as fit. */
+  layout?: 'four' | 'auto';
+  padding?: string;
+}
+const { title, photos, layout = 'auto', padding = '0 0 120px' } = Astro.props;
+---
+<section id="gallery" style={`padding: ${padding}`}>
+  <div class="wrap">
+    <SectionHead eyebrow="Gallery" title={title} spacing={40} />
+    <div class:list={['gallery', `gallery--${layout}`]}>
+      {photos.map((p) => (
+        <div class="tile reveal"><img src={p.src} alt={p.alt} loading="lazy" /></div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .gallery--auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+  .gallery--four { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  @media (min-width: 900px) { .gallery--four { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; } }
+</style>

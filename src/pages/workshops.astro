@@ -1,0 +1,96 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import IntroSplit from '../components/IntroSplit.astro';
+import OfferRows from '../components/OfferRows.astro';
+import Facts from '../components/Facts.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Gallery from '../components/Gallery.astro';
+import Quote from '../components/Quote.astro';
+import ContactCta from '../components/ContactCta.astro';
+import { whatsappWith } from '../data/site';
+
+const offers = [
+  { title: 'Learn the strokes', image: '/images/workshop-practice-sheet.jpg', alt: 'Calligraphy practice sheet on grid paper with repeated letter strokes', text: 'We begin on practice sheets, getting to know the pen and the shapes of the letters, and finding the rhythm that makes calligraphy flow.' },
+  { title: 'Create your own artwork', image: '/images/workshop-red-canvases.jpg', alt: 'Red canvases painted with gold Arabic calligraphy next to practice sheets', text: 'Then you bring what you’ve learned onto canvas with paints and metallic markers, and leave with a piece you made yourself.' },
+  { title: 'Celebrate your progress', image: '/images/workshop-certificate.jpg', alt: 'Certificate of completion beside a black and gold calligraphy canvas and a calligraphy gift bag', text: 'A certificate of completion, with your name written in calligraphy, to mark what you’ve achieved.' },
+];
+
+const facts = [
+  { label: 'Format', value: '[ADD: group / private / corporate]', placeholder: true },
+  { label: 'Duration', value: '[ADD: e.g. hours per session]', placeholder: true },
+  { label: 'Level', value: '[ADD: beginners welcome? / levels]', placeholder: true },
+  { label: 'Location', value: '[ADD: venue / I come to you]', placeholder: true },
+  { label: 'Materials', value: '[ADD: included? what to bring]', placeholder: true },
+  { label: 'Price', value: '[ADD: AED … per person]', placeholder: true },
+];
+
+const gallery = [
+  { src: '/images/workshop-group.jpg', alt: 'Workshop participants gathered around a table of calligraphy materials' },
+  { src: '/images/workshop-place-setting.jpg', alt: 'Calligraphy workshop place setting with paints, markers, a practice sheet and a gift bag' },
+  { src: '/images/workshop-table-easels.jpg', alt: 'Blank canvases on easels set out for a workshop' },
+];
+---
+<Base
+  title="Workshops — Art De Writx"
+  description="Learn Arabic calligraphy through a relaxed, creative, hands-on workshop with Hajara of Art De Writx."
+  current="workshops"
+>
+  <PageHero
+    image="/images/workshop-table-easels.jpg"
+    alt="Workshop table set with blank canvases on easels, paints, markers and calligraphy practice sheets"
+    eyebrow="Services · Workshops"
+    title="Workshops"
+    subtitle="Learn Arabic calligraphy through a creative, hands-on experience."
+    primary={{ label: 'Book a workshop', href: '#contact' }}
+    secondary={{ label: 'Workshop details', href: '#details' }}
+    position="center 60%"
+  />
+
+  <IntroSplit
+    image="/images/workshop-participants-painting.jpg"
+    alt="Workshop participants painting gold and red calligraphy canvases around a shared table"
+    eyebrow="Learn with me"
+    title="Pick up the pen,"
+    accent="at your own pace"
+    stat={{ value: '80+', label: 'Students trained worldwide' }}
+  >
+    <p class="muted">My workshops are for anyone curious about Arabic calligraphy. We start with the letter shapes and build up step by step, until you’ve created a piece of your own.</p>
+    <p class="muted">It’s relaxed, creative and hands-on. I’ll guide you through every stroke, with plenty of time to practise and ask questions.</p>
+  </IntroSplit>
+
+  <section class="offers">
+    <div class="wrap">
+      <SectionHead eyebrow="What to expect" title="From first stroke to finished piece" spacing={72} />
+      <OfferRows offers={offers} />
+    </div>
+  </section>
+
+  <Facts id="details" title="Workshop details" facts={facts} columns={3}>
+    <div class="reveal upcoming">
+      <div>
+        <div class="upcoming-label">Upcoming workshops</div>
+        <div class="upcoming-dates"><span class="ph">[ADD: next dates]</span></div>
+      </div>
+      <a class="btn btn-gold" href={whatsappWith('Hi Hajara, when is your next calligraphy workshop?')} target="_blank" rel="noopener">Ask about the next date</a>
+    </div>
+  </Facts>
+
+  <Gallery title="From past workshops" photos={gallery} padding="110px 0 120px" />
+
+  <Quote quote="The workshop was incredibly inspiring. Hajara’s knowledge and patience made learning calligraphy accessible and enjoyable." author="Workshop Attendee" />
+
+  <ContactCta
+    title="Come and write with me"
+    text="Whether it’s just you, a group of friends or your whole team, get in touch and I’ll share the next dates and options."
+    mailSubject="Workshop enquiry"
+    whatsappText="Hi Hajara, I'd like to book a calligraphy workshop."
+  />
+</Base>
+
+<style>
+  .offers { padding: 0 0 40px; }
+  .upcoming { margin-top: 32px; background: var(--ink); color: var(--ivory); border-radius: 20px; padding: 36px 32px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px; }
+  .upcoming-label { font-size: 12px; font-weight: 500; letter-spacing: .2em; text-transform: uppercase; color: var(--gold); }
+  .upcoming-dates { margin-top: 8px; font-family: var(--serif); font-size: 26px; line-height: 1.3; }
+</style>

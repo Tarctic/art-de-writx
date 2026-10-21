@@ -1,0 +1,37 @@
+---
+// Numbered rows of photo + text that alternate sides on desktop.
+export interface Offer {
+  title: string;
+  text: string;
+  image: string;
+  alt: string;
+  /** Optional smaller line under the main text. */
+  note?: string;
+}
+interface Props {
+  offers: Offer[];
+}
+const { offers } = Astro.props;
+---
+<div class="offer-rows">
+  {offers.map((o, i) => (
+    <div class="split">
+      <div class:list={['reveal', 'lift', 'offer-media', { flip: i % 2 === 0 }]}>
+        <div class="frame"><img src={o.image} alt={o.alt} loading="lazy" /></div>
+      </div>
+      <div class="reveal stack offer-copy">
+        <p class="eyebrow">{String(i + 1).padStart(2, '0')}</p>
+        <h3 class="title title--row">{o.title}</h3>
+        <p class="muted">{o.text}</p>
+        {o.note && <p class="muted offer-note">{o.note}</p>}
+      </div>
+    </div>
+  ))}
+</div>
+
+<style>
+  .offer-rows { display: flex; flex-direction: column; gap: 110px; }
+  .offer-media { width: 100%; }
+  .offer-copy { gap: 16px; }
+  .offer-note { margin-top: 6px !important; font-size: 15px; }
+</style>
