@@ -1,0 +1,26 @@
+---
+// "Kind Words" band with a single testimonial.
+interface Props {
+  quote: string;
+  author: string;
+}
+const { quote, author } = Astro.props;
+---
+<section class="section section--blush quote-section">
+  <div class="wrap quote-wrap">
+    <h2 class="reveal script-title quote-title">Kind Words</h2>
+    <figure class="reveal">
+      <blockquote>“{quote}”</blockquote>
+      <figcaption>{author}</figcaption>
+    </figure>
+  </div>
+</section>
+
+<style>
+  .quote-section { padding: 110px 0; }
+  .quote-wrap { max-width: 880px; text-align: center; }
+  .quote-title { margin-bottom: 32px; font-size: clamp(54px, 6vw, 76px); }
+  figure { margin: 0; }
+  blockquote { margin: 0; font-family: var(--serif); font-style: italic; font-size: clamp(24px, 2.8vw, 34px); line-height: 1.4; }
+  figcaption { margin-top: 22px; font-size: 13px; font-weight: 500; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); }
+</style>

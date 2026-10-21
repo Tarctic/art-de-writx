@@ -1,0 +1,92 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import IntroSplit from '../components/IntroSplit.astro';
+import OfferRows from '../components/OfferRows.astro';
+import Facts from '../components/Facts.astro';
+import Steps from '../components/Steps.astro';
+import Gallery from '../components/Gallery.astro';
+import Quote from '../components/Quote.astro';
+import ContactCta from '../components/ContactCta.astro';
+
+const offers = [
+  { title: 'Canvases & frames', image: '/images/custom-gold-leaf-canvas.jpg', alt: 'Gold-leaf landscape canvas with Arabic calligraphy displayed above a cream sofa', text: 'Statement pieces for your home or office: verses, names and quotes in the colours and size that suit your space.' },
+  { title: 'Names & meaningful words', image: '/images/custom-pink-canvas.jpg', alt: 'Canvas with pink Arabic calligraphy strokes on a red and cream painted background', text: 'A name for a new baby, a word for a wedding, a phrase for someone you love. Small, personal pieces that become part of a story.' },
+  { title: 'Hand-painted pieces', image: '/images/custom-perfume-sunset.jpg', alt: 'Perfume bottle hand-painted with a pink sunset sky, roses and a white garden fence', text: 'Perfume bottles and everyday objects, hand-painted with florals, landscapes or calligraphy, to turn something you love into something one of a kind.' },
+  { title: 'Custom gift hampers', image: '/images/custom-hamper-black-box.jpg', alt: 'Clear gift hamper with a black box personalised in gold Arabic calligraphy, a watch and a teddy bear', text: 'Thoughtfully put-together hampers, finished with a personalised calligraphy touch, for celebrations, new arrivals and corporate gifting.', note: 'I also design calligraphy logos. Ask me about it.' },
+];
+
+const facts = [
+  { label: 'Delivery', value: 'UAE-based, worldwide orders' },
+  { label: 'Sizes', value: '[ADD: available sizes / formats]', placeholder: true },
+  { label: 'Lead time', value: '[ADD: typical turnaround]', placeholder: true },
+  { label: 'Pricing', value: '[ADD: from AED … / on request]', placeholder: true },
+];
+
+const steps = [
+  { title: 'Share your idea', text: 'The name, verse or quote, the occasion, and any colours or sizes you have in mind.' },
+  { title: 'We agree the design', text: 'We settle the style and details together before I begin.' },
+  { title: 'I create it by hand', text: 'Your piece is made with care, then [ADD: collection / delivery details].' },
+];
+
+const gallery = [
+  { src: '/images/custom-kaaba-canvas.jpg', alt: 'Calligraphy canvas in black, silver and gold inspired by the Kaaba cover' },
+  { src: '/images/custom-perfume-peonies.jpg', alt: 'Glass perfume bottle hand-painted with pink peonies and olive leaves' },
+  { src: '/images/custom-perfume-pair.jpg', alt: 'Two perfume bottles, one hand-painted with pink flowers' },
+  { src: '/images/custom-burgundy-verse.jpg', alt: 'Gold Arabic calligraphy verse on a deep burgundy canvas' },
+  { src: '/images/custom-hamper-roses.jpg', alt: 'Clear gift hamper with a framed piece, red roses and a pink ribbon' },
+  { src: '/images/custom-hamper-navy-baby.jpg', alt: 'Navy gift hamper with baby clothes, shoes and a teddy bear' },
+];
+---
+<Base
+  title="Custom Art — Art De Writx"
+  description="Handwritten names, verses, quotes and bespoke Arabic calligraphy artworks, made by hand in the UAE for clients worldwide."
+  current="custom"
+>
+  <PageHero
+    image="/images/custom-burgundy-verse.jpg"
+    alt="Gold Arabic calligraphy verse on a deep burgundy canvas, hung in an elegant living room"
+    eyebrow="Services · Custom Art"
+    title="Custom Calligraphy"
+    subtitle="Handwritten names, verses, quotes and bespoke artworks created especially for you."
+    primary={{ label: 'Commission a piece', href: '#contact' }}
+    secondary={{ label: 'See the work', href: '#gallery' }}
+    position="center 35%"
+    shade={0.6}
+  />
+
+  <IntroSplit
+    image="/images/custom-lavender-name.jpg"
+    alt="Round canvas with an Arabic name in purple surrounded by painted lavender"
+    eyebrow="Made for you"
+    title="Your idea,"
+    accent="written by hand"
+    stat={{ value: 'UAE-based', label: 'Worldwide orders', small: true }}
+  >
+    <p class="muted">I love turning my clients’ imagination into meaningful artworks. A name, a verse that means something to your family, or a quote you live by: I’ll bring it to life in a piece made only for you.</p>
+    <p class="muted">Every piece is made by hand, so no two are ever quite the same.</p>
+  </IntroSplit>
+
+  <section class="offers">
+    <div class="wrap"><OfferRows offers={offers} /></div>
+  </section>
+
+  <Facts title="Ordering details" facts={facts} />
+
+  <Steps title="From your idea to your wall" steps={steps} />
+
+  <Gallery title="Recent commissions" photos={gallery} />
+
+  <Quote quote="Professional, creative, and truly passionate about her craft. Highly recommend for any celebration." author="Corporate Client, UAE" />
+
+  <ContactCta
+    title="Let’s create your piece"
+    text="Send me your idea, even if it’s just a word or a feeling, and I’ll help you shape it into something beautiful."
+    mailSubject="Custom art enquiry"
+    whatsappText="Hi Hajara, I'd like to ask about a custom calligraphy piece."
+  />
+</Base>
+
+<style>
+  .offers { padding: 0 0 40px; }
+</style>

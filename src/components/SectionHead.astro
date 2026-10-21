@@ -1,0 +1,19 @@
+---
+// Centred eyebrow + heading that opens most sections.
+interface Props {
+  eyebrow: string;
+  title: string;
+  /** Gap below the heading block, in px. */
+  spacing?: number;
+}
+const { eyebrow, title, spacing = 48 } = Astro.props;
+---
+<div class="reveal section-head" style={`margin-bottom: ${spacing}px`}>
+  <p class="eyebrow">✦ {eyebrow}</p>
+  <h2 class="title title--md">{title}</h2>
+</div>
+
+<style>
+  .section-head { text-align: center; }
+  .section-head .eyebrow { margin-bottom: 14px; }
+</style>

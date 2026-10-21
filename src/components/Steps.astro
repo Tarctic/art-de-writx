@@ -1,0 +1,35 @@
+---
+import SectionHead from './SectionHead.astro';
+
+// "How it works": three numbered steps. Step text may contain a placeholder written as [ADD: …].
+interface Props {
+  title: string;
+  steps: { title: string; text: string }[];
+}
+const { title, steps } = Astro.props;
+// Wrap any [ADD: …] note in a highlighted span so it's easy to spot until it's filled in.
+const withPlaceholders = (text: string) =>
+  text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/(\[ADD:[^\]]*\])/g, '<span class="ph">$1</span>');
+---
+<section class="section steps-section">
+  <div class="wrap">
+    <SectionHead eyebrow="How it works" title={title} spacing={56} />
+    <div class="steps">
+      {steps.map((s, i) => (
+        <div class="reveal step">
+          <div class="step-num">{i + 1}</div>
+          <h3 class="title step-title">{s.title}</h3>
+          <p class="muted step-text" set:html={withPlaceholders(s.text)} />
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .steps-section { padding: 110px 0; }
+  .step { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+  .step-num { font-family: var(--serif); font-size: 56px; line-height: 1; color: var(--bronze); }
+  .step-title { font-size: 28px; }
+  .step-text { max-width: 320px; }
+</style>
